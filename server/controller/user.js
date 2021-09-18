@@ -28,8 +28,6 @@ createUser = async(req, res, next) => {
         
         const token = jwt.sign({ user_id: user._id, email }, 'soso', { expiresIn: "2h"});
         user.token = token;
-        console.log(token)
-        console.log(user.token)
         res.status(200).json(user);
     }
     catch (err){

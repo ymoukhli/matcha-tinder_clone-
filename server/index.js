@@ -23,7 +23,7 @@ app.use(express.urlencoded({
     })
     app.post('/soso', controller.createUser);
     app.post('/coco', controller.longIn);
-    app.post('/hi', verif, (req, res) => {
+    app.post('/hi', auth, (req, res) => {
         res.status(200).send("Welcome");
     });
     

@@ -8,11 +8,15 @@ import {
 } from "react-router-dom";
 
 import LandingPage from './components/LandingPage.js'
+import FillInfo from './components/Forum.js'
 
 function App() {
   return (
     <Router>
-      <Route path="/" component={LandingPage}></Route>
+      <Switch>
+        <Route path="/FillInfo" component={FillInfo}></Route>
+        <Route path="/" component={LandingPage}></Route>
+      </Switch>
     </Router>
   );
 }
