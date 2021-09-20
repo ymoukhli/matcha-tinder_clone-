@@ -1,65 +1,60 @@
-const User = require('../models/user.js');
-const jwt = require('jsonwebtoken');
+const User = require("../models/user.js");
+const jwt = require("jsonwebtoken");
 
-createUser = async(req, res, next) => {
-    
-    try {
-        console.log('//////////////////////////////////////////')
-        const {firstName, lastName, email, password, userName } = req.body;
-
-        if (!(email && password && firstName && lastName && userName))
-        {
-            res.status(400).send("all input is required");
-        }
-        let oldUser = await 
-        User.findOne({
-            $and: [
-                {email},
-                {userName}
-            ]
-        })
-        if (oldUser) {
-            return res.status(409).send("email already exist");
-        }
-        
-        const user = await User.create({
-            firstName, lastName, email, password, userName
-        });
-        
-        const token = jwt.sign({ user_id: user._id, email }, 'soso', { expiresIn: "2h"});
-        user.token = token;
-        res.status(200).json(user);
+createUser = async (req, res, next) => {
+  try {
+    const { firstName, lastName, email, password, userName } = req.body;
+    console.log("\n\n\n\ndsada " + password + "\ndsfkl");
+    if (!(email && password && firstName && lastName && userName)) {
+      res.status(400).send("all input is required");
     }
-    catch (err){
-
-        console.log(err);
-        res.status(500)
+    let oldUser = await User.findOne({
+      $and: [{ email }, { userName }],
+    });
+    if (oldUser) {
+      return res.status(409).send("email already exist");
     }
-    
-    
-}
 
-longIn = async( req, res ) => {
-    try {
-        const { email, password } = req.body;
-        if (!(email && password)) {
-            res.status(400).send("All input is required");
-        }
-        const user = await User.findOne( { email });
+    const user = await User.create({
+      firstName,
+      lastName,
+      email,
+      password,
+      userName,
+    });
 
-        if (user && password === user.password )
-        {
-            const token = jwt.sign({user_id: user._id, email}, 'soso', { expiresIn: "2h"})
+    const token = jwt.sign({ user_id: user._id, email }, "soso", {
+      expiresIn: "2h",
+    });
+    user.token = token;
+    res.status(200).json(user);
+  } catch (err) {
+    console.log(err);
+    res.status(500);
+  }
+};
 
-            user.token = token;
-            
-            return res.status(200).json(user);
-        }
-        return res.status(400).send("invalid credentials");
+longIn = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (!(email && password)) {
+      return res.status(400).send("All input are required");
     }
-    catch (e) {
-        console.log(e)
+    const user = await User.findOne({ email });
+
+    if (user && password === user.password) {
+      const token = jwt.sign({ user_id: user._id, email }, "soso", {
+        expiresIn: "2h",
+      });
+
+      user.token = token;
+      console.log("YEY");
+      return res.status(200).json(user);
     }
+    return res.status(400).send("invalid credentials");
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 /*
@@ -71,4 +66,4 @@ User.findOne({
 })
 */
 
-module.exports = { createUser , longIn}
+module.exports = { createUser, longIn };

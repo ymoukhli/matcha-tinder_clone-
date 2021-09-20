@@ -1,23 +1,42 @@
-import Button from './Button'
-import { createBrowserHistory } from 'history'
+import Button from "./Button";
+import { createBrowserHistory } from "history";
+import axios from "axios";
 
-export default function LoginOverlay(props)
-{
-    const history = createBrowserHistory()
-    const validate = (e) => {
-        history.push("/FillInfo");
-    }
-    return (
-        <div className="w-screen h-screen bg-purple-600 bg-opacity-25 fixed top-0 left-0 flex items-center justify-center ">
-            <div className="bg-gray-500 w-2/5 max-w-md">
-                <form className="flex flex-col">
-                    <label for="userName">username :</label>
-                    <input type="text" id="userName" name="userName" required minlength="4" size="10"></input>
-                    <label for="password">password :</label>
-                    <input type="password" id="password" name="password" required minlength="4" size="10"></input>
-                    <Button text="login" onClick={validate}></Button>
-                </form>
-            </div>
-        </div>
-    )
+export default function LoginOverlay(props) {
+  const history = createBrowserHistory();
+
+  const validate = (e) => {
+    e.preventDefault();
+    const formData = new FormData(document.getElementById("loginFromId"));
+    const userName = formData.get("userName");
+    const password = formData.get("password");
+    axios
+      .post("/login", { password, email: userName })
+      .then((e) => console.log(e))
+      .catch((e) => console.log(e));
+    // history.push("/FillInfo");
+  };
+  return (
+    <form className="flex flex-col" id="loginFromId">
+      <label htmlFor="userName">username :</label>
+      <input
+        type="text"
+        id="userName"
+        name="userName"
+        required
+        minLength="4"
+        size="10"
+      ></input>
+      <label htmlFor="password">password :</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        required
+        minLength="4"
+        size="10"
+      ></input>
+      <Button text="login" type="submit" onClick={validate}></Button>
+    </form>
+  );
 }
