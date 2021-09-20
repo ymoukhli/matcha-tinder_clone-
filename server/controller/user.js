@@ -14,7 +14,7 @@ createUser = async (req, res, next) => {
     if (oldUser) {
       return res.status(409).send("email already exist");
     }
-
+    
     const user = await User.create({
       firstName,
       lastName,

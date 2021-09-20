@@ -4,7 +4,6 @@ import axios from "axios";
 export default function SigningOverlay(props) {
   function sendInfo(e) {
     e.preventDefault();
-    console.log(e);
     const formData = new FormData(document.getElementById("signupForm"));
 
     let userName = formData.get("userName");
@@ -42,8 +41,8 @@ export default function SigningOverlay(props) {
         firstName,
       },
     })
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+    .then((e) => console.log(`logged in succefully`, e))
+    .catch((e) => console.log(`respond with failure`, e));
   }
 
   return (
