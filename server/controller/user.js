@@ -49,13 +49,12 @@ longIn = async (req, res) => {
     if (!(email && password)) {
       return res.status(400).send("All input are required");
     }
-    const user = await User.findOne({ email });
-
+    let user = await User.findOne({ email });
+    if (user === null) user = await User.findOne({userName: email })
     if (user && password === user.password) {
-      const token = jwt.sign({ user_id: user._id, email }, "soso", {
+      const token = jwt.sign({ user_id: user._id, email: user.email }, "soso", {
         expiresIn: "2h",
       });
-      
       user.token = token;
       return res.status(200).json(user);
     }
@@ -67,14 +66,5 @@ longIn = async (req, res) => {
     console.log(e);
   }
 };
-
-/*
-User.findOne({
-    $and: [
-        {email},
-        {userName}
-    ]
-})
-*/
 
 module.exports = { createUser, longIn };

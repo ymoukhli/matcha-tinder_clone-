@@ -9,6 +9,11 @@ const user = new Schema({
     password: { type : String, required: true , max: 30},
     emailVerified: {type: Boolean, default:false},
     token: { type : String },
+    config: { type : Schema.Types.ObjectId, ref : "UserConfig" },
+    passions: String,
+    userGender: String,
+    genderPreference: String,
+    biography: String,
 })
 
 module.exports = mongoose.model('User', user);
