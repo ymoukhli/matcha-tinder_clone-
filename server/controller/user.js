@@ -55,10 +55,14 @@ longIn = async (req, res) => {
       const token = jwt.sign({ user_id: user._id, email }, "soso", {
         expiresIn: "2h",
       });
+      
       user.token = token;
       return res.status(200).json(user);
     }
-    return res.status(400).send("invalid credentials");
+    
+    if (user && password !== user.password) 
+      return res.status(409).json({ password : 'password'})
+    return res.status(409).json({ email : 'email'});
   } catch (e) {
     console.log(e);
   }

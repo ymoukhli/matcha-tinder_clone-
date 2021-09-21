@@ -49,11 +49,9 @@ export default function SigningOverlay(props) {
         firstName,
       },
     })
-    .then((res) => {console.log(`logged in succefully`, res)
+    .then((res) => {
     history.push('/FillInfo')
-    history.forward();
     history.go(0)
-    
   }
     )
     .catch((error) => {
