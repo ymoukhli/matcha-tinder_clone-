@@ -12,8 +12,8 @@ export default function LoginOverlay(props) {
     const password = formData.get("password");
     axios
       .post("/login", { password, email: userName })
-      .then((e) => console.log(`logged in succefully`, e))
-      .catch((e) => console.log(`respond with failure`, e));
+      .then((err) => console.log(`logged in succefully`, err))
+      .catch((res) => console.log(`respond with failure`, res));
     // history.push("/FillInfo");
   };
   return (

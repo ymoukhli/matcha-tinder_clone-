@@ -7,17 +7,6 @@ const check = (req, res, next) => {
     {
         console.log("verified");
     }
-    console.log(req.body.email)
-    let oldUser = User.findOne({email: req.body.email})
-    if (oldUser)
-    {
-        return res.status(409).json({ message : 'email'})
-    }
-    oldUser = User.findOne({userName: req.body.userName})
-    if (oldUser)
-    {
-        return res.status(409).json({ message : 'userName'})
-    }
     next();
 }
 

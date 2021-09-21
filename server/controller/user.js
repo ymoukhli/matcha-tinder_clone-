@@ -1,19 +1,28 @@
 const User = require("../models/user.js");
 const jwt = require("jsonwebtoken");
+const { default: userEvent } = require("@testing-library/user-event");
 
 createUser = async (req, res, next) => {
   try {
     const { firstName, lastName, email, password, userName } = req.body;
-    console.log("\n\n\n\ndsada " + password + "\ndsfkl");
+   
     if (!(email && password && firstName && lastName && userName)) {
       res.status(400).send("all input is required");
     }
-    let oldUser = await User.findOne({
-      $and: [{ email }, { userName }],
-    });
-    if (oldUser) {
-      return res.status(409).send("email already exist");
-    }
+    let oldUser = await User.findOne({email,userName});
+    
+  if (oldUser && oldUser.email === email) 
+    return res.status(409).json({ email : 'email', userName : 'userName'})
+    oldUser = await User.findOne({
+      $or: [
+          {email},
+          {userName}
+      ]
+  })
+  if (oldUser && oldUser.email === email) 
+        return res.status(409).json({ email : 'email'})
+  if (oldUser && oldUser.userName === userName) 
+        return res.status(409).send({ userName : 'userName'})
     
     const user = await User.create({
       firstName,
@@ -46,9 +55,7 @@ longIn = async (req, res) => {
       const token = jwt.sign({ user_id: user._id, email }, "soso", {
         expiresIn: "2h",
       });
-
       user.token = token;
-      console.log("YEY");
       return res.status(200).json(user);
     }
     return res.status(400).send("invalid credentials");

@@ -6,7 +6,7 @@ const cors = require("cors");
 const controller = require("./controller/user.js");
 const auth = require("./middleware/auth.js");
 const verif = require("./middleware/emailVerification.js");
-const userCheck = require("./middleware/userCreationcheck.js");
+const check = require("./middleware/userCreationcheck.js");
 
 db.on("error", (e) => console.log(`error in data base: ${e.message}`));
 app.use(express.json());
@@ -24,8 +24,8 @@ app.use(cors());
 app.get("/", (req, res, next) => {
   console.log("getting");
 });
-app.post("/creatUser", userCheck,controller.createUser);
-app.post("/login", userCheck, controller.longIn);
+app.post("/creatUser", check,controller.createUser);
+app.post("/login", controller.longIn);
 app.post("/hi", auth, (req, res) => {
   res.status(200).send("Welcome");
 });
