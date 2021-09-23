@@ -1,9 +1,9 @@
-export const TextArea = () => {
+export const TextArea = (props) => {
 
     return (
         <div>
             <label htmlFor="bio">biography</label>
-            <textarea /*className={textArea.normal}*/ id="bio" rows="4"></textarea>
+            <textarea name={props.name} id="bio" rows="4"></textarea>
         </div>
     );
 }

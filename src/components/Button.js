@@ -28,6 +28,7 @@ export default function Button({ type = "button", ...props }) {
       id={props.id}
       onClick={props.onClick}
       className={className}
+      form={props.form}
       type={type}
     >
       {props.text}

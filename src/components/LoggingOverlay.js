@@ -21,6 +21,7 @@ export default function LoginOverlay(props) {
     axios
       .post("/login", { password, email })
       .then((res) => {
+        // go to home or fill
         history.push('/FillInfo')
         history.go(0)
       })

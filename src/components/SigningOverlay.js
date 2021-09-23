@@ -26,18 +26,6 @@ export default function SigningOverlay(props) {
     let passwordPatern = new RegExp(
       `^(?=.{5,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$`
     );
-    // axios.get('/user?ID=12345')
-    // .then(function (response) {
-    //   // handle success
-    //   console.log(response);
-    // })
-    // .catch(function (error) {
-    //   // handle error
-    //   console.log(error);
-    // })
-    // .then(function () {
-    //   // always executed
-    // });
     axios({
       method: "post",
       url: "/creatUser",

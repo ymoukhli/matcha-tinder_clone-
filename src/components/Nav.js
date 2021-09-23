@@ -7,9 +7,8 @@ export const Nav = (props) => {
     return (
         <nav className="flex justify-between">
             <p /*className={nav.text} */>{props.msg}</p>
-            <Button text="done" /*form={props.form}*/></Button>
+            <Button text="done" type="button" form={props.form} onClick={props.onClick} id={props.id}></Button>
         </nav>
-    )
-}
+)}
 
 export default Nav
